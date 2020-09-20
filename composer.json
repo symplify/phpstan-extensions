@@ -1,0 +1,28 @@
+{
+    "name": "symplify/phpstan-extensions",
+    "description": "Pre-escaped error messages in 'symplify' error format, container aware test case and other useful extensions for PHPStan",
+    "license": "MIT",
+    "require": {
+        "php": ">=7.2",
+        "phpstan/phpstan": "^0.12.40",
+        "symplify/package-builder": "^8.3.12",
+        "symplify/smart-file-system": "^8.3.12"
+    },
+    "autoload": {
+        "psr-4": {
+            "Symplify\\PHPStanExtensions\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Symplify\\PHPStanExtensions\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "8.4-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
