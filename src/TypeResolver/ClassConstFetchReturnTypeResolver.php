@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Symplify\PHPStanExtensions\TypeResolver;
 
-use PhpParser\Node\Arg;
 use PhpParser\Node\Expr\ClassConstFetch;
 use PhpParser\Node\Expr\MethodCall;
 use PHPStan\Reflection\MethodReflection;
@@ -28,17 +27,11 @@ final class ClassConstFetchReturnTypeResolver
     public function resolve(MethodReflection $methodReflection, MethodCall $methodCall): Type
     {
         $returnType = ParametersAcceptorSelector::selectSingle($methodReflection->getVariants())->getReturnType();
-
         if (! isset($methodCall->args[0])) {
             return $returnType;
         }
 
-        $firstArgOrVariadciPlaceholder = $methodCall->args[0];
-        if (! $firstArgOrVariadciPlaceholder instanceof Arg) {
-            return new MixedType();
-        }
-
-        $firstValue = $firstArgOrVariadciPlaceholder->value;
+        $firstValue = $methodCall->args[0]->value;
         if (! $firstValue instanceof ClassConstFetch) {
             return new MixedType();
         }
