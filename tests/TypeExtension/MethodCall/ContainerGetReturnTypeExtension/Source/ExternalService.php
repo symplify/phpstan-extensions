@@ -6,5 +6,4 @@ namespace Symplify\PHPStanExtensions\Tests\TypeExtension\MethodCall\ContainerGet
 
 final class ExternalService
 {
-
 }
