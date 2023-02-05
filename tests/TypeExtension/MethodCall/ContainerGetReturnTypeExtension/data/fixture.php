@@ -6,7 +6,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symplify\PHPStanExtensions\Tests\TypeExtension\MethodCall\ContainerGetReturnTypeExtension\Source\ExternalService;
 use function PHPStan\Testing\assertType;
 
-class SomeClass
+final class SomeClass
 {
     public function run(ContainerInterface $container): void
     {
