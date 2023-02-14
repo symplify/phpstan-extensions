@@ -12,6 +12,8 @@ parameters:
         - '*/tests/**/Source/*'
         - '*/tests/**/Fixture/*'
         - '*/tests/**/data/*'
+        # copy-pasted 3rd party code
+        - src/Console/Terminal.php
 
     unused_public:
         methods: true

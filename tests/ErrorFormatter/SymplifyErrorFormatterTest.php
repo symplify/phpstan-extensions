@@ -6,6 +6,7 @@ namespace Symplify\PHPStanExtensions\Tests\ErrorFormatter;
 
 use Iterator;
 use PHPStan\Testing\ErrorFormatterTestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 use Symplify\PHPStanExtensions\ErrorFormatter\SymplifyErrorFormatter;
 
 /**
@@ -13,9 +14,7 @@ use Symplify\PHPStanExtensions\ErrorFormatter\SymplifyErrorFormatter;
  */
 final class SymplifyErrorFormatterTest extends ErrorFormatterTestCase
 {
-    /**
-     * @dataProvider provideData()
-     */
+    #[DataProvider('provideData')]
     public function testFormatErrors(
         string $message,
         int $expectedExitCode,
@@ -36,7 +35,7 @@ final class SymplifyErrorFormatterTest extends ErrorFormatterTestCase
     /**
      * @return Iterator<mixed>
      */
-    public function provideData(): Iterator
+    public static function provideData(): Iterator
     {
         yield ['Some message', 1, 1, 1, __DIR__ . '/Fixture/expected_single_message_many_files_report.txt'];
     }

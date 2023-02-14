@@ -10,9 +10,9 @@ use PHPStan\Command\AnalysisResult;
 use PHPStan\Command\ErrorFormatter\ErrorFormatter;
 use PHPStan\Command\Output;
 use PHPStan\Command\OutputStyle;
-use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Terminal;
 use Symfony\Component\Filesystem\Filesystem;
+use Symplify\PHPStanExtensions\Console\Terminal;
+use Symplify\PHPStanExtensions\Enum\ResultStatus;
 
 /**
  * @see \Symplify\PHPStanExtensions\Tests\ErrorFormatter\SymplifyErrorFormatterTest
@@ -34,11 +34,9 @@ final class SymplifyErrorFormatter implements ErrorFormatter
 
     private ?Output $output = null;
 
-    public function __construct(
-        private readonly Terminal $terminal
-    ) {
-    }
-
+    /**
+     * @return ResultStatus::*
+     */
     public function formatErrors(AnalysisResult $analysisResult, Output $output): int
     {
         $outputStyle = $output->getStyle();
@@ -46,7 +44,7 @@ final class SymplifyErrorFormatter implements ErrorFormatter
 
         if ($analysisResult->getTotalErrorsCount() === 0 && $analysisResult->getWarnings() === []) {
             $outputStyle->success('No errors');
-            return Command::SUCCESS;
+            return ResultStatus::SUCCESS;
         }
 
         $this->reportErrors($analysisResult, $outputStyle);
@@ -61,7 +59,7 @@ final class SymplifyErrorFormatter implements ErrorFormatter
             $outputStyle->warning($warning);
         }
 
-        return Command::FAILURE;
+        return ResultStatus::FAILURE;
     }
 
     private function reportErrors(AnalysisResult $analysisResult, OutputStyle $outputStyle): void
@@ -82,7 +80,7 @@ final class SymplifyErrorFormatter implements ErrorFormatter
 
     private function separator(): void
     {
-        $separator = str_repeat('-', $this->terminal->getWidth() - self::BULGARIAN_CONSTANT);
+        $separator = str_repeat('-', Terminal::getWidth() - self::BULGARIAN_CONSTANT);
         $this->writeln($separator);
     }
 
