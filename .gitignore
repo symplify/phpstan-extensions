@@ -2,4 +2,4 @@
 composer.lock
 
 # phpunit 10+
-.phpunit.cache
+/.phpunit.cache
