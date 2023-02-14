@@ -10,9 +10,17 @@ namespace Symplify\PHPStanExtensions\Console;
  */
 final class Terminal
 {
-    private static $width;
+    /**
+     * @var array<int, array<string>>
+     */
+    private const DESCRIPTORSPEC = [
+        1 => ['pipe', 'w'],
+        2 => ['pipe', 'w'],
+    ];
 
-    private static $stty;
+    private static ?int $width = null;
+
+    private static ?bool $stty = null;
 
     public static function getWidth(): int
     {
@@ -20,9 +28,11 @@ final class Terminal
         if ($width !== \false) {
             return (int) \trim($width);
         }
+
         if (self::$width === null) {
             self::initDimensions();
         }
+
         return self::$width ?: 80;
     }
 
@@ -31,24 +41,26 @@ final class Terminal
         if (self::$stty !== null) {
             return self::$stty;
         }
+
         if (! \function_exists('exec')) {
             return \false;
         }
+
         \exec('stty 2>&1', $output, $exitcode);
         return self::$stty = $exitcode === 0;
     }
 
-    private static function initDimensions()
+    private static function initDimensions(): void
     {
-        $dimensions = self::getConsoleMode();
+        $consoleMode = self::getConsoleMode();
 
         if ('\\' === \DIRECTORY_SEPARATOR) {
-            if (\preg_match('/^(\\d+)x(\\d+)(?: \\((\\d+)x(\\d+)\\))?$/', \trim(\getenv('ANSICON')), $matches)) {
+            if (\preg_match('#^(\d+)x(\d+)(?: \((\d+)x(\d+)\))?$#', \trim(\getenv('ANSICON')), $matches)) {
                 self::$width = (int) $matches[1];
             } elseif (! self::hasVt100Support() && self::hasSttyAvailable()) {
                 self::initDimensionsUsingStty();
-            } elseif ($dimensions) {
-                self::$width = (int) $dimensions[0];
+            } elseif ($consoleMode) {
+                self::$width = (int) $consoleMode[0];
             }
         } else {
             self::initDimensionsUsingStty();
@@ -62,12 +74,12 @@ final class Terminal
 
     private static function initDimensionsUsingStty(): void
     {
-        $sttyString = self::getSttyColumns();
+        $sttyColumns = self::getSttyColumns();
 
-        if ($sttyString) {
-            if (\preg_match('/rows.(\\d+);.columns.(\\d+);/i', $sttyString, $matches)) {
+        if ($sttyColumns) {
+            if (\preg_match('#rows.(\d+);.columns.(\d+);#i', $sttyColumns, $matches)) {
                 self::$width = (int) $matches[2];
-            } elseif (\preg_match('/;.(\\d+).rows;.(\\d+).columns/i', $sttyString, $matches)) {
+            } elseif (\preg_match('#;.(\d+).rows;.(\d+).columns#i', $sttyColumns, $matches)) {
                 self::$width = (int) $matches[2];
             }
         }
@@ -76,9 +88,14 @@ final class Terminal
     private static function getConsoleMode(): ?array
     {
         $info = self::readFromProcess('mode CON');
-        if ($info === null || ! \preg_match('/--------+\\r?\\n.+?(\\d+)\\r?\\n.+?(\\d+)\\r?\\n/', $info, $matches)) {
+        if ($info === null) {
             return null;
         }
+
+        if (! \preg_match('#--------+\r?\n.+?(\d+)\r?\n.+?(\d+)\r?\n#', $info, $matches)) {
+            return null;
+        }
+
         return [(int) $matches[2], (int) $matches[1]];
     }
 
@@ -92,16 +109,14 @@ final class Terminal
         if (! \function_exists('proc_open')) {
             return null;
         }
-        $descriptorspec = [
-            1 => ['pipe', 'w'],
-            2 => ['pipe', 'w'],
-        ];
-        $process = \proc_open($command, $descriptorspec, $pipes, null, null, [
+
+        $process = \proc_open($command, self::DESCRIPTORSPEC, $pipes, null, null, [
             'suppress_errors' => \true,
         ]);
         if (! \is_resource($process)) {
             return null;
         }
+
         $info = \stream_get_contents($pipes[1]);
         \fclose($pipes[1]);
         \fclose($pipes[2]);
