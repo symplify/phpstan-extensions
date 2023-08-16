@@ -10,9 +10,9 @@ use PHPStan\Command\AnalysisResult;
 use PHPStan\Command\ErrorFormatter\ErrorFormatter;
 use PHPStan\Command\Output;
 use PHPStan\Command\OutputStyle;
-use Symfony\Component\Filesystem\Filesystem;
 use Symplify\PHPStanExtensions\Console\Terminal;
 use Symplify\PHPStanExtensions\Enum\ResultStatus;
+use Symplify\PHPStanExtensions\FilesystemHelper;
 
 /**
  * @see \Symplify\PHPStanExtensions\Tests\ErrorFormatter\SymplifyErrorFormatterTest
@@ -68,8 +68,8 @@ final class SymplifyErrorFormatter implements ErrorFormatter
             return;
         }
 
-        foreach ($analysisResult->getFileSpecificErrors() as $error) {
-            $this->printSingleError($error, $outputStyle);
+        foreach ($analysisResult->getFileSpecificErrors() as $fileSpecificError) {
+            $this->printSingleError($fileSpecificError, $outputStyle);
         }
 
         $outputStyle->newLine();
@@ -92,10 +92,7 @@ final class SymplifyErrorFormatter implements ErrorFormatter
             return $clearFilePath;
         }
 
-        $filesystem = new Filesystem();
-        $relativeFilePath = $filesystem->makePathRelative($clearFilePath, getcwd());
-
-        return rtrim($relativeFilePath, '/');
+        return FilesystemHelper::resolveFromCwd($clearFilePath);
     }
 
     private function regexMessage(string $message): string

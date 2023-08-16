@@ -15,11 +15,6 @@ parameters:
         # copy-pasted 3rd party code
         - src/Console/Terminal.php
 
-    unused_public:
-        methods: true
-        properties: true
-        constants: true
-
     ignoreErrors:
         - '#Calling PHPStan\\Testing\\ErrorFormatterTestCase\:\:(getOutputContent|getOutput|getAnalysisResult)|\(\) is not covered by backward compatibility promise\. The method might change in a minor PHPStan version#'
         - '#Extending PHPStan\\Testing\\ErrorFormatterTestCase is not covered by backward compatibility promise\. The class might change in a minor PHPStan version#'
