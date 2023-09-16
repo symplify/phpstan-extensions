@@ -19,9 +19,15 @@ use Symplify\PHPStanExtensions\TypeResolver\ClassConstFetchReturnTypeResolver;
  */
 final class ContainerGetReturnTypeExtension implements DynamicMethodReturnTypeExtension
 {
-    public function __construct(
-        private readonly ClassConstFetchReturnTypeResolver $classConstFetchReturnTypeResolver
-    ) {
+    /**
+     * @readonly
+     * @var \Symplify\PHPStanExtensions\TypeResolver\ClassConstFetchReturnTypeResolver
+     */
+    private $classConstFetchReturnTypeResolver;
+
+    public function __construct(ClassConstFetchReturnTypeResolver $classConstFetchReturnTypeResolver)
+    {
+        $this->classConstFetchReturnTypeResolver = $classConstFetchReturnTypeResolver;
     }
 
     public function getClass(): string

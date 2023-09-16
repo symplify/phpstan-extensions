@@ -18,9 +18,15 @@ final class Terminal
         2 => ['pipe', 'w'],
     ];
 
-    private static ?int $width = null;
+    /**
+     * @var int|null
+     */
+    private static $width;
 
-    private static ?bool $stty = null;
+    /**
+     * @var bool|null
+     */
+    private static $stty;
 
     public static function getWidth(): int
     {
