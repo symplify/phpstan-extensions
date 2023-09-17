@@ -39,7 +39,7 @@ src/Command/ReleaseCommand.php:51
 ------------------------------------------------------------------------------------------
 ```
 
-The config also loads few return type extensions.
+<br>
 
 ### Return Type Extensions
 
