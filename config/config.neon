@@ -2,6 +2,10 @@ includes:
     - symplify.error_formatter.neon
 
 services:
+    -
+        class: Symplify\PHPStanExtensions\TypeExtension\MethodCall\LaravelContainerMakeTypeExtension
+        tags: [phpstan.broker.dynamicMethodReturnTypeExtension]
+
     # Symfony Container::get($1) => $1 type
     -
         class: Symplify\PHPStanExtensions\TypeExtension\MethodCall\ContainerGetReturnTypeExtension
