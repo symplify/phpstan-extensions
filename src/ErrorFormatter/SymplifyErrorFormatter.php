@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Symplify\PHPStanExtensions\ErrorFormatter;
 
-use Nette\Utils\Strings;
 use PHPStan\Analyser\Error;
 use PHPStan\Command\AnalysisResult;
 use PHPStan\Command\ErrorFormatter\ErrorFormatter;
@@ -87,7 +86,9 @@ final class SymplifyErrorFormatter implements ErrorFormatter
     private function getRelativePath(string $filePath): string
     {
         // remove trait clutter
-        $clearFilePath = Strings::replace($filePath, self::FILE_WITH_TRAIT_CONTEXT_REGEX, '$1');
+        /** @var string $clearFilePath */
+        $clearFilePath = preg_replace(self::FILE_WITH_TRAIT_CONTEXT_REGEX, '$1', $filePath);
+
         if (! file_exists($clearFilePath)) {
             return $clearFilePath;
         }
