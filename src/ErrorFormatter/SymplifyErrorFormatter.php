@@ -31,7 +31,10 @@ final class SymplifyErrorFormatter implements ErrorFormatter
      */
     private const FILE_WITH_TRAIT_CONTEXT_REGEX = '#(?<file>.*?)(\s+\(in context.*?)?$#';
 
-    private ?Output $output = null;
+    /**
+     * @var \PHPStan\Command\Output|null
+     */
+    private $output;
 
     /**
      * @return ResultStatus::*
