@@ -38,7 +38,7 @@ final class ContainerGetReturnTypeExtension implements DynamicMethodReturnTypeEx
         MethodReflection $methodReflection,
         MethodCall $methodCall,
         Scope $scope
-    ): Type {
+    ): ?Type {
         return $this->classConstFetchReturnTypeResolver->resolve($methodReflection, $methodCall);
     }
 }
