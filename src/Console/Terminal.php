@@ -55,8 +55,9 @@ final class Terminal
         $consoleMode = self::getConsoleMode();
 
         if ('\\' === \DIRECTORY_SEPARATOR) {
-            if (\preg_match('#^(\d+)x(\d+)(?: \((\d+)x(\d+)\))?$#', \trim(\getenv('ANSICON')), $matches)) {
-                self::$width = (int) $matches[1];
+            $width = self::getAnsiconWidth();
+            if ($width !== null) {
+                self::$width = $width;
             } elseif (! self::hasVt100Support() && self::hasSttyAvailable()) {
                 self::initDimensionsUsingStty();
             } elseif ($consoleMode) {
@@ -122,5 +123,18 @@ final class Terminal
         \fclose($pipes[2]);
         \proc_close($process);
         return $info;
+    }
+
+    private static function getAnsiconWidth(): ?int
+    {
+        if (!is_string(\getenv('ANSICON'))) {
+            return null;
+        }
+
+        if (\preg_match('#^(\d+)x(\d+)(?: \((\d+)x(\d+)\))?$#', \trim(\getenv('ANSICON')), $matches)) {
+            return (int) $matches[1];
+        }
+
+        return null;
     }
 }
