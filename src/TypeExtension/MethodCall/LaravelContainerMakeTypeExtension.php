@@ -36,7 +36,7 @@ final class LaravelContainerMakeTypeExtension implements DynamicMethodReturnType
         MethodReflection $methodReflection,
         MethodCall $methodCall,
         Scope $scope
-    ): Type {
+    ): ?Type {
         return $this->classConstFetchReturnTypeResolver->resolve($methodReflection, $methodCall);
     }
 }

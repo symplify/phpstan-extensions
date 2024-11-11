@@ -18,10 +18,8 @@ use Symplify\PHPStanExtensions\Exception\ShouldNotHappenException;
 
 final class ClassConstFetchReturnTypeResolver
 {
-    public function resolve(MethodReflection $methodReflection, MethodCall $methodCall): Type
+    public function resolve(MethodReflection $methodReflection, MethodCall $methodCall): ?Type
     {
-        $returnType = ParametersAcceptorSelector::selectSingle($methodReflection->getVariants())->getReturnType();
-
         if (! isset($methodCall->args[0])) {
             throw new ShouldNotHappenException('Not supported without argument');
         }
@@ -45,6 +43,6 @@ final class ClassConstFetchReturnTypeResolver
             return new ObjectType($className);
         }
 
-        return $returnType;
+        return null;
     }
 }
