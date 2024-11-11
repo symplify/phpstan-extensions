@@ -56,7 +56,7 @@ final class Terminal
 
         if ('\\' === \DIRECTORY_SEPARATOR) {
             $width = self::getAnsiconWidth();
-            if ($width === null) {
+            if ($width !== null) {
                 self::$width = $width;
             } elseif (! self::hasVt100Support() && self::hasSttyAvailable()) {
                 self::initDimensionsUsingStty();
