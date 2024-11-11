@@ -54,8 +54,8 @@ final class Terminal
     {
         $consoleMode = self::getConsoleMode();
 
-        if ('\\' === \DIRECTORY_SEPARATOR && is_string(\getenv('ANSICON'))) {
-            if (\preg_match('#^(\d+)x(\d+)(?: \((\d+)x(\d+)\))?$#', \trim(\getenv('ANSICON')), $matches)) {
+        if ('\\' === \DIRECTORY_SEPARATOR) {
+            if (is_string(\getenv('ANSICON')) && \preg_match('#^(\d+)x(\d+)(?: \((\d+)x(\d+)\))?$#', \trim(\getenv('ANSICON')), $matches)) {
                 self::$width = (int) $matches[1];
             } elseif (! self::hasVt100Support() && self::hasSttyAvailable()) {
                 self::initDimensionsUsingStty();
