@@ -1,0 +1,10 @@
+ ---------------------------%s
+  /data/folder/with space/and unicode 😃/project/folder with unicode 😃/file name with "spaces" and unicode 😃.php:4
+ ---------------------------%s
+  - '#Foo#'
+  🪪 identical.alwaysFalse
+ ---------------------------%s
+
+
+ [ERROR] Found 1 errors
+
