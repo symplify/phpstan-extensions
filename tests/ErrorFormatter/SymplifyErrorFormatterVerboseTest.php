@@ -54,8 +54,10 @@ final class SymplifyErrorFormatterVerboseTest extends ErrorFormatterTestCase
 
     protected function getAnalysisResult($numFileErrors, int $numGenericErrors): AnalysisResult
     {
+        // @phpstan-ignore phpstanApi.constructor
         $fileErrors = [new Error('Foo', self::DIRECTORY_PATH . '/folder with unicode 😃/file name with "spaces" and unicode 😃.php', 4, identifier: 'identical.alwaysFalse')];
 
+        // @phpstan-ignore phpstanApi.constructor
         return new AnalysisResult($fileErrors, [], [], [], [], \false, null, \true, 0, \false, []);
     }
 }
