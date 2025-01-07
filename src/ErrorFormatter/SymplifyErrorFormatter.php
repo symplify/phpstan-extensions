@@ -136,7 +136,7 @@ final class SymplifyErrorFormatter implements ErrorFormatter
         $itemMessage = sprintf(" - '%s'", $regexMessage);
         $this->writeln($itemMessage);
 
-        if ($this->output?->isVerbose() && $error->getIdentifier() !== null && $error->canBeIgnored()) {
+        if ($error->getIdentifier() !== null && $error->canBeIgnored()) {
             $this->writeln(' 🪪 ' . $error->getIdentifier());
         }
 
