@@ -42,6 +42,7 @@
         "check-cs": "vendor/bin/ecs check --ansi",
         "fix-cs": "vendor/bin/ecs check --fix",
         "phpstan": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/phpunit",
         "rector": "vendor/bin/rector process --dry-run --ansi"
     },
     "config": {
