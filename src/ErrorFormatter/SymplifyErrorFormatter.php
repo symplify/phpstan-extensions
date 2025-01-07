@@ -136,6 +136,10 @@ final class SymplifyErrorFormatter implements ErrorFormatter
         $itemMessage = sprintf(" - '%s'", $regexMessage);
         $this->writeln($itemMessage);
 
+        if ($error->getIdentifier() !== null && $error->canBeIgnored()) {
+            $this->writeln(' 🪪 ' . $error->getIdentifier());
+        }
+
         $this->separator();
         $outputStyle->newLine();
     }

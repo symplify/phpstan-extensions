@@ -3,6 +3,7 @@ includes:
 
 parameters:
     level: 8
+    errorFormat: symplify
 
     paths:
         - src

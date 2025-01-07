@@ -127,7 +127,7 @@ final class Terminal
 
     private static function getAnsiconWidth(): ?int
     {
-        if (!is_string(\getenv('ANSICON'))) {
+        if (! is_string(\getenv('ANSICON'))) {
             return null;
         }
 

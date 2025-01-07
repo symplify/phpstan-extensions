@@ -1,5 +1,6 @@
 /vendor
 composer.lock
+.idea
 
 # phpunit 10+
 /.phpunit.cache
