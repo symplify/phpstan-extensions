@@ -2,31 +2,32 @@
 
 [![Downloads total](https://img.shields.io/packagist/dt/symplify/phpstan-extensions.svg?style=flat-square)](https://packagist.org/packages/symplify/phpstan-extensions/stats)
 
+<br>
+
 ## Install
 
 ```bash
 composer require symplify/phpstan-extensions --dev
 ```
 
-Update config:
+<b>
+
+## Symplify Error Formatter
+
+Update your `phpstan.neon` config:
 
 ```yaml
-# phpstan.neon
-includes:
-    - 'vendor/symplify/phpstan-extensions/config/config.neon'
+parameters:
+    errorFormat: symplify
 ```
-
-## Use
-
-### Symplify Error Formatter
-
-*Works best with [anthraxx/intellij-awesome-console](https://github.com/anthraxx/intellij-awesome-console)*
 
 - Do you want to **click the error and get right to the line in the file** it's reported at?
 - Do you want to **copy-paste regex escaped error to your `ignoreErrors`**?
 
+Works best with [anthraxx/intellij-awesome-console](https://github.com/anthraxx/intellij-awesome-console)
+
 ```bash
-vendor/bin/phpstan analyse src --level max --error-format symplify
+vendor/bin/phpstan analyse src
 ```
 
 ↓
@@ -41,9 +42,9 @@ src/Command/ReleaseCommand.php:51
 
 <br>
 
-### Return Type Extensions
+## Improved Symfony Types
 
-#### `Symplify\PHPStanExtensions\ReturnTypeExtension\ContainerGetTypeExtension`
+#### `ContainerGetTypeExtension`
 
 With Symfony container and type as an argument, you always know **the same type is returned**:
 
@@ -60,7 +61,9 @@ $container->get(Type::class);
 $this->get(Type::class);
 ```
 
-#### `Symplify\PHPStanExtensions\ReturnTypeExtension\KernelGetContainerAfterBootReturnTypeExtension`
+<br>
+
+#### `KernelGetContainerAfterBootReturnTypeExtension`
 
 After Symfony Kernel boot, `getContainer()` always returns the container:
 
@@ -82,7 +85,9 @@ $kernel->getContainer();
 // Reality: ContainerInterface ✅
 ```
 
-#### `Symplify\PHPStanExtensions\ReturnTypeExtension\SplFileInfoTolerantReturnTypeExtension`
+<br>
+
+#### `SplFileInfoTolerantReturnTypeExtension`
 
 Symfony Finder finds only existing files (obviously), so the `getRealPath()` always return `string`:
 
@@ -101,10 +106,4 @@ foreach ($finder as $fileInfo) {
 
 <br>
 
-## Report Issues
-
-In case you are experiencing a bug or want to request a new feature head over to the [Symplify monorepo issue tracker](https://github.com/symplify/symplify/issues)
-
-## Contribute
-
-The sources of this package are contained in the Symplify monorepo. We welcome contributions for this package on [symplify/symplify](https://github.com/symplify/symplify).
+Happy coding!
