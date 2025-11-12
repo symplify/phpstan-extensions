@@ -6,7 +6,7 @@ use Rector\Config\RectorConfig;
 
 return RectorConfig::configure()
     ->withPaths([__DIR__ . '/src', __DIR__ . '/tests'])
-    ->withPreparedSets(codeQuality: true, deadCode: true, naming: true, privatization: true, earlyReturn: true, codingStyle: true)
+    ->withPreparedSets(deadCode: true, codeQuality: true, codingStyle: true, privatization: true, naming: true, earlyReturn: true)
     ->withRootFiles()
     ->withSkip([
         '*/Source/*',
