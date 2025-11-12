@@ -13,14 +13,13 @@ use PHPStan\Reflection\MethodReflection;
 use PHPStan\Type\MixedType;
 use PHPStan\Type\ObjectType;
 use PHPStan\Type\Type;
-use Symplify\PHPStanExtensions\Exception\ShouldNotHappenException;
 
 final class ClassConstFetchReturnTypeResolver
 {
     public function resolve(MethodReflection $methodReflection, MethodCall $methodCall): ?Type
     {
         if (! isset($methodCall->args[0])) {
-            throw new ShouldNotHappenException('Not supported without argument');
+            return null;
         }
 
         $firstArgOrVariadciPlaceholder = $methodCall->args[0];
